@@ -1,0 +1,40 @@
+{
+  "name": "@dashkite/genie-release",
+  "version": "0.0.0",
+  "description": "Genie Preset for managing module releases",
+  "keywords": [],
+  "homepage": "https://github.com/dashkite/genie-release#readme",
+  "bugs": {
+    "url": "https://github.com/dashkite/genie-release/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dashkite/genie-release.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Daniel Yoder",
+  "exports": {
+    ".": {
+      "browser": "./build/browser/src/index.js",
+      "node": "./build/node/src/index.js"
+    }
+  },
+  "main": "build/node/src/index.js",
+  "files": [
+    "build/browser/src",
+    "build/node/src"
+  ],
+  "scripts": {
+    "test": "genie test",
+    "build": "genie build"
+  },
+  "devDependencies": {
+    "@dashkite/amen": "^0.2.0",
+    "@dashkite/amen-console": "^0.0.2",
+    "@dashkite/assert": "^0.1.4",
+    "@dashkite/genie": "link:../genie",
+    "@dashkite/genie-presets": "link:../genie-presets"
+  },
+  "dependencies": {
+  }
+}
