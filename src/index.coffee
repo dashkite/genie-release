@@ -1,4 +1,4 @@
-import { $ as sh } from "zx"
+import { sh } from "./helpers"
 
 export default ( Genie ) ->
 
@@ -12,16 +12,17 @@ export default ( Genie ) ->
           sh "npm version #{ version }"
         else
           sh "npm version pre#{ version } --preid #{ tag }"
+      when "development"
+        # no-op: we leave that to other presets        
       else
-        console.error "please specify the version, ex: `release:version:patch`."
-        process.exit 1
+        throw new Error "genie-release: unknown version: #{ version }"
 
   Genie.define "release:publish", -> sh "npm publish --access public"
 
   Genie.define "release:push", -> sh "git push --follow-tags"
 
-  Genie.define "release", "test", (version) ->
-    t.run [
+  Genie.define "release", "test", ( version = "development" ) ->
+    Genie.run [
       "release:version:#{version}"
       "release:publish"
       "release:push"
