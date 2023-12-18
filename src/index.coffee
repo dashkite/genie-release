@@ -15,7 +15,8 @@ export default ( Genie ) ->
       when "development"
         # no-op: we leave that to other presets        
       else
-        throw new Error "genie-release: unknown version: #{ version }"
+        throw new Error "genie-release: 
+          unknown version type: #{ version }"
 
   Genie.define "release:publish", -> sh "npm publish --access public"
 
