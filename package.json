@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/genie-release",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Genie Preset for managing module releases",
   "keywords": [],
   "homepage": "https://github.com/dashkite/genie-release#readme",
