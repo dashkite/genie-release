@@ -38,6 +38,7 @@
     "@dashkite/vista": "link:../vista"
   },
   "dependencies": {
-    "execa": "^5.1.1"
+    "execa": "^5.1.1",
+    "zx": "^8.6.1"
   }
 }
