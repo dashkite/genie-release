@@ -5,7 +5,7 @@ import { Pkg } from "./package"
 # See ticket #1
 # https://github.com/dashkite/genie-release/issues/1
 
-class Dependency extends metaclass()
+class Dependency
 
   @make: ( key, specifier ) ->
     scope = undefined
@@ -15,16 +15,14 @@ class Dependency extends metaclass()
     Object.assign ( new @ ),
       { key, scope, name, specifier }
 
-  @getters
+  isLocal: -> @specifier.startsWith "link:"
 
-    isLocal: -> @specifier.startsWith "link:"
-
-    path: -> if @isLocal then @specifier[5..]
+  path: -> if @isLocal then @specifier[5..]
 
   canUpdate: ->
-    if @isLocal && ( await @getPublishedSpecifier())?
+    if @isLocal() && ( await @getPublishedSpecifier())?
       if ( lastPublished = await Pkg.modified @key )?
-        lastCommit = await Git.getPenultimateCommit @path
+        lastCommit = await Git.getPenultimateCommit @path()
         lastCommit <= lastPublished
       else false
     else false

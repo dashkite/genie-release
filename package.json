@@ -33,14 +33,10 @@
     "@dashkite/amen-console": "^0.0.2",
     "@dashkite/assert": "^0.1.4",
     "@dashkite/genie": "^0.8.4",
-    "@dashkite/genie-clean": "link:../genie-clean",
-    "@dashkite/genie-coffee": "^0.1.0",
-    "@dashkite/genie-release": "link:",
-    "@dashkite/vista": "link:../vista"
+    "@dashkite/genie-coffee": "^0.1.0"
   },
   "dependencies": {
-    "@dashkite/joy": "link:../joy",
-    "@dashkite/zephyr": "link:../zephyr",
+    "@dashkite/zephyr": "^0.2.0",
     "zx": "^8.6.1"
   }
 }

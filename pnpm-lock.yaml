@@ -8,12 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@dashkite/joy':
-        specifier: link:../joy
-        version: link:../joy
       '@dashkite/zephyr':
-        specifier: link:../zephyr
-        version: link:../zephyr
+        specifier: ^0.2.0
+        version: 0.2.0
       zx:
         specifier: ^8.6.1
         version: 8.6.1
@@ -30,18 +27,9 @@ importers:
       '@dashkite/genie':
         specifier: ^0.8.4
         version: 0.8.4
-      '@dashkite/genie-clean':
-        specifier: link:../genie-clean
-        version: link:../genie-clean
       '@dashkite/genie-coffee':
         specifier: ^0.1.0
         version: 0.1.0
-      '@dashkite/genie-release':
-        specifier: 'link:'
-        version: 'link:'
-      '@dashkite/vista':
-        specifier: link:../vista
-        version: link:../vista
 
 packages:
 
@@ -623,6 +611,9 @@ packages:
 
   '@dashkite/masonry@0.13.0':
     resolution: {integrity: sha512-qGP0Ortn8tzBTY9BRv965V5IIhJCmsNMTjLq0X7Pk80lBgNROc+tV/5BXjziBZ9CG7fcJ5h3ZvCsl1f6byfsFQ==}
+
+  '@dashkite/zephyr@0.2.0':
+    resolution: {integrity: sha512-l3Fm9nyOIp1yBnv4IzGOKVgo1/UucU5WLvsqAfcP2jEVlE4AgpPkODssyloxTyC3N+bhcz1DXqC/7KokI1eVjA==}
 
   '@eslint-community/eslint-utils@4.4.1':
     resolution: {integrity: sha512-s3O3waFUrMV8P/XaF/+ZTp1X9XBZW1a4B97ZnjQF2KYWaFD2A8KyFBsrsfSjEmjn3RGWAIuvlneuZm3CUK3jbA==}
@@ -2159,6 +2150,11 @@ snapshots:
       fast-glob: 3.3.3
     transitivePeerDependencies:
       - supports-color
+
+  '@dashkite/zephyr@0.2.0':
+    dependencies:
+      '@dashkite/joy': 0.3.16
+      js-yaml: 4.1.0
 
   '@eslint-community/eslint-utils@4.4.1(eslint@8.57.1)':
     dependencies:
