@@ -8,9 +8,12 @@ importers:
 
   .:
     dependencies:
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
+      '@dashkite/joy':
+        specifier: link:../joy
+        version: link:../joy
+      '@dashkite/zephyr':
+        specifier: link:../zephyr
+        version: link:../zephyr
       zx:
         specifier: ^8.6.1
         version: 8.6.1
@@ -33,6 +36,9 @@ importers:
       '@dashkite/genie-coffee':
         specifier: ^0.1.0
         version: 0.1.0
+      '@dashkite/genie-release':
+        specifier: 'link:'
+        version: 'link:'
       '@dashkite/vista':
         specifier: link:../vista
         version: link:../vista

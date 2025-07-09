@@ -35,10 +35,12 @@
     "@dashkite/genie": "^0.8.4",
     "@dashkite/genie-clean": "link:../genie-clean",
     "@dashkite/genie-coffee": "^0.1.0",
+    "@dashkite/genie-release": "link:",
     "@dashkite/vista": "link:../vista"
   },
   "dependencies": {
-    "execa": "^5.1.1",
+    "@dashkite/joy": "link:../joy",
+    "@dashkite/zephyr": "link:../zephyr",
     "zx": "^8.6.1"
   }
 }

@@ -1,5 +1,7 @@
 import { $ } from "zx"
-import { Release, Dependencies } from "./helpers"
+import { Release, Dependencies, Git, Pkg } from "./helpers"
+
+# $.quiet = true
 
 export default ( Genie ) ->
 
@@ -21,16 +23,27 @@ export default ( Genie ) ->
 
   Genie.define "release:push", -> $ "git push --follow-tags"
 
-  Genie.define "release:upgrade-local-dependencies", ->
-    await Dependencies.updateLocalDependences()
+  Genie.define "release:update-local-dependencies", ->
+    Dependencies.updateLocalDependencies()
 
   Genie.define "release", "test", ( version ) ->
 
-    version ?= await Release.getType()
+    if await Git.isClean()
 
-    Genie.run [
-      "release:upgrade-local-dependencies"
-      "release:version:#{version}"
-      "release:publish"
-      "release:push"
-    ]
+      if await Pkg.hasChanges()
+
+        version ?= await Release.getType()
+
+        Genie.run [
+          "release:update-local-dependencies"
+          "release:version:#{version}"
+          "release:publish"
+          "release:push"
+        ]
+
+    else
+
+      throw new Error "genie-release:
+        unable to release because 
+        there are uncommitted changes"
+
