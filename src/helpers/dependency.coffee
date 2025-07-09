@@ -22,7 +22,7 @@ class Dependency
   canUpdate: ->
     if @isLocal() && ( await @getPublishedSpecifier())?
       if ( lastPublished = await Pkg.modified @key )?
-        lastCommit = await Git.getPenultimateCommit @path()
+        lastCommit = await Git.getLastCommit @path()
         lastCommit <= lastPublished
       else false
     else false

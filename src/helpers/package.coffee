@@ -26,7 +26,7 @@ Pkg =
     pkg = await Zephyr.read "package.json"
     key = pkg.name
     if ( lastPublished = await Pkg.modified key )?
-      lastCommit = await Git.getPenultimateCommit "."
+      lastCommit = await Git.getLastCommit "."
       lastCommit > lastPublished
     else true
 

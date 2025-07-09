@@ -9,10 +9,8 @@ Git =
     catch error      
       false
 
-  # we use -2 here to get the next to last (penultimate)
-  # commit, since we commit the tag right after publishing
-  getPenultimateCommit: ( path ) ->
-    ( await $"git -C #{ path } log -2 --date=iso-strict --pretty=format:'%cd'" )
+  getLastCommit: ( path ) ->
+    ( await $"git -C #{ path } log -1 --date=iso-strict --pretty=format:'%cd'" )
       .text()
       .trim()
     
