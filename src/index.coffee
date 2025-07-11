@@ -26,7 +26,13 @@ export default ( Genie ) ->
   Genie.define "release:update-local-dependencies", ->
     Dependencies.updateLocalDependencies()
 
-  Genie.define "release", "test", ( version ) ->
+  # TODO add dependency on test task
+  #      in theory, genie supports optional tasks
+  #      but we got an undefined task ('Starting undefined')
+  #      and an error:
+  #      Cannot read properties of undefined (reading 'initialize')
+
+  Genie.define "release", ( version ) ->
 
     if await Git.isClean()
 
