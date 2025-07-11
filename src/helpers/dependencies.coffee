@@ -16,7 +16,7 @@ Dependencies =
 
     for key, specifier of pkg.dependencies
       dependency = Dependency.make key, specifier
-      if dependency.isLocal
+      if dependency.isLocal()
         if await dependency.canUpdate()
           updated.push dependency
         else
@@ -37,7 +37,7 @@ Dependencies =
 
     for key, specifier of pkg.devDependencies
       dependency = Dependency.make key, specifier
-      if dependency.isLocal
+      if dependency.isLocal()
         if await dependency.canUpdate()
           updated.push dependency
         else
