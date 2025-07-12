@@ -6,6 +6,10 @@ Pkg =
 
   install: -> $"pnpm i"
 
+  localVersion: ->
+    pkg = await Zephyr.read "package.json"
+    pkg.version
+
   specifier: ( key ) ->
     try
       ( await $"pnpm view #{ key } version".quiet())

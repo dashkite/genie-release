@@ -19,10 +19,17 @@ export default ( Genie ) ->
         throw new Error "genie-release: 
           unknown version type: #{ version }"
 
-  Genie.define "release:publish", -> success $"npm publish --access public"
+  Genie.define "release:publish", -> 
+    await success $"npm publish --access public"
+    # confirm that NPM has the right version
+    local = await Pkg.localVersion()
+    count = 0
+    loop
+      remote = await Pkg.specifier "."
+      break if (( local == remote ) || ( count++ > 10 ))
 
   Genie.define "release:push", -> success $"git push --follow-tags"
-
+    
   Genie.define "release:update-local-dependencies", ->
     Dependencies.updateLocalDependencies()
 
