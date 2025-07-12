@@ -1,5 +1,5 @@
 import { $ } from "zx"
-import { Release, Dependencies, Git, Pkg } from "./helpers"
+import { Release, Dependencies, Git, Pkg, success } from "./helpers"
 
 # $.quiet = true
 
@@ -9,19 +9,19 @@ export default ( Genie ) ->
     [ version, tag ] = version.split "-"
     switch version
       when "alpha", "beta"
-        $ "npm version prerelease --preid #{ version }"
+        success $"npm version prerelease --preid #{ version }"
       when "major", "minor", "patch"
         unless tag?
-          $ "npm version #{ version }"
+          success $"npm version #{ version }"
         else
-          $ "npm version pre#{ version } --preid #{ tag }"
+          success $"npm version pre#{ version } --preid #{ tag }"
       else
         throw new Error "genie-release: 
           unknown version type: #{ version }"
 
-  Genie.define "release:publish", -> $ "npm publish --access public"
+  Genie.define "release:publish", -> success $"npm publish --access public"
 
-  Genie.define "release:push", -> $ "git push --follow-tags"
+  Genie.define "release:push", -> success $"git push --follow-tags"
 
   Genie.define "release:update-local-dependencies", ->
     Dependencies.updateLocalDependencies()
