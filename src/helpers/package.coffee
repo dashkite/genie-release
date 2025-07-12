@@ -1,6 +1,7 @@
 import { $ } from "zx"
 import Zephyr from "@dashkite/zephyr"
 import { Git } from "./git"
+import { success } from "./command"
 
 Pkg =
 
@@ -12,7 +13,7 @@ Pkg =
 
   specifier: ( key ) ->
     try
-      ( await $"pnpm view #{ key } version".quiet())
+      ( await success $"pnpm view #{ key } version".quiet())
         .text()
         .trim()
     catch
@@ -21,7 +22,7 @@ Pkg =
   modified: ( key ) ->
     try
       specifier = await Pkg.specifier key
-      timestamps = ( await $"pnpm view #{ key } time --json" ).json()
+      timestamps = ( await success $"pnpm view #{ key } time --json" ).json()
       timestamps[ specifier ]
     catch
       ( new Date 0 ).toISOString()
