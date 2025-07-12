@@ -1,4 +1,5 @@
 import { $ } from "zx"
+import { success } from "./command"
 
 Git =
 
@@ -10,11 +11,13 @@ Git =
       false
 
   getLastCommit: ( path ) ->
-    ( await $"git -C #{ path } log -1 --date=iso-strict --pretty=format:'%cd'" )
+    local = ( await success $"git -C #{ path } log -1 
+      --date=iso-strict --pretty=format:'%ci'" )
       .text()
       .trim()
+    ( new Date local ).toISOString()
     
-  commit: ( message ) -> 
-    $"git add -A . && git commit -m #{ message }"
+  commit: ( message ) ->
+    success $"git add -A . && git commit -m #{ message }"
 
 export { Git }

@@ -32,6 +32,7 @@ Pkg =
     key = pkg.name
     if ( lastPublished = await Pkg.modified key )?
       lastCommit = await Git.getLastCommit "."
+      console.log { lastCommit, lastPublished }
       lastCommit > lastPublished
     else true
 
