@@ -1,5 +1,5 @@
 import { $ } from "zx"
-import { Release, Dependencies, Git, Pkg, success } from "./helpers"
+import { Release, Dependencies, Git, Pkg, success, sleep } from "./helpers"
 
 # $.quiet = true
 
@@ -19,16 +19,28 @@ export default ( Genie ) ->
         throw new Error "genie-release: 
           unknown version type: #{ version }"
 
-  Genie.define "release:publish", -> 
-    await success $"npm publish --access public"
+  Genie.define "release:publish", -> success $"npm publish --access public"
+
+  Genie.define "release:push", ->
+    success $"git push --follow-tags"
+
     # confirm that NPM has the right version
+
+    # we do this after pushing the tags instead of after the publish
+    # because NPM has promised us (by not failing on the publish)
+    # that the publish was successful, so we're simply confirming
+    # in case there are dependent tasks that need the module to be
+    # availble in NPM...
+
     local = await Pkg.localVersion()
     count = 0
     loop
       remote = await Pkg.specifier "."
       break if (( local == remote ) || ( count++ > 10 ))
-
-  Genie.define "release:push", -> success $"git push --follow-tags"
+      await sleep 1000
+    if count > 10
+      throw new Error "genie-release:
+        unable to confirm NPM publish was successful" 
     
   Genie.define "release:update-local-dependencies", ->
     Dependencies.updateLocalDependencies()
