@@ -36,9 +36,9 @@ export default ( Genie ) ->
     count = 0
     loop
       remote = await Pkg.specifier "."
-      break if (( local == remote ) || ( count++ > 10 ))
-      await sleep 1000
-    if count > 10
+      break if (( local == remote ) || ( count++ > 20 ))
+      await sleep 2500
+    if count > 20
       throw new Error "genie-release:
         unable to confirm NPM publish was successful" 
     
