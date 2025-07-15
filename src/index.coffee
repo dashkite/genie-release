@@ -33,14 +33,20 @@ export default ( Genie ) ->
     # availble in NPM...
 
     local = await Pkg.localVersion()
-    count = 0
-    interval = 1000
+    count = 1
+    # NPM caches reponses for 5 min
+    interval = 5 * 60 * 1000
+    # 3 retries = 15 min
+    retries = 3
+    # we must appease the angry NPM god: initially give it
+    # some time (10 seconds) to (hopefully) avoid caching a
+    # 404, because it caches it for 5 min :o
+    await sleep 10 * 1000
     loop
       remote = await Pkg.specifier "."
-      break if (( local == remote ) || ( count++ > 20 ))
+      break if (( local == remote ) || ( count++ > retries ))
       await sleep interval
-      interval += 1000
-    if count > 20
+    if count > retries
       throw new Error "genie-release:
         unable to confirm NPM publish was successful" 
     
