@@ -34,14 +34,17 @@ export default ( Genie ) ->
 
     local = await Pkg.localVersion()
     count = 1
+    # give everything an extra 10 seconds to be safe
+    pause = 15 * 1000
     # NPM caches reponses for 5 min
-    interval = 5 * 60 * 1000
+    # we give it an extra 10 seconds to be sure
+    interval = ( 5 * 60 * 1000 ) + pause
     # 3 retries = 15 min
     retries = 3
     # we must appease the angry NPM god: initially give it
     # some time (10 seconds) to (hopefully) avoid caching a
     # 404, because it caches it for 5 min :o
-    await sleep 10 * 1000
+    await sleep pause
     loop
       remote = await Pkg.specifier "."
       break if (( local == remote ) || ( count++ > retries ))
