@@ -19,10 +19,12 @@ export default ( Genie ) ->
         throw new Error "genie-release: 
           unknown version type: #{ version }"
 
-  Genie.define "release:publish", -> success $"npm publish --access public"
+  Genie.define "release:publish", -> 
+    success $"npm publish --access public"
 
   Genie.define "release:push", ->
-    success $"git push --follow-tags"
+
+    await success $"git push --follow-tags"
 
     # confirm that NPM has the right version
 
@@ -47,6 +49,7 @@ export default ( Genie ) ->
     await sleep pause
     loop
       remote = await Pkg.specifier "."
+      console.log { remote, local }
       break if (( local == remote ) || ( count++ > retries ))
       await sleep interval
     if count > retries
@@ -61,6 +64,9 @@ export default ( Genie ) ->
   #      but we got an undefined task ('Starting undefined')
   #      and an error:
   #      Cannot read properties of undefined (reading 'initialize')
+
+  # TODO add check to make sure the files property of the package.json
+  #      file is populated. other integrity checks?
 
   Genie.define "release", ( version ) ->
 

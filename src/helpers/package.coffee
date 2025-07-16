@@ -8,6 +8,8 @@ Pkg =
   install: -> $"pnpm i"
 
   localVersion: ->
+    # make sure we don't get a cached version, please
+    Zephyr.invalidate "package.json"
     pkg = await Zephyr.read "package.json"
     pkg.version
 
