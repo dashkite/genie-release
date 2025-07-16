@@ -37,7 +37,7 @@
     "@dashkite/genie-coffee": "^0.1.0"
   },
   "dependencies": {
-    "@dashkite/zephyr": "^0.2.0",
+    "@dashkite/zephyr": "link:../zephyr",
     "zx": "^8.6.1"
   }
 }
