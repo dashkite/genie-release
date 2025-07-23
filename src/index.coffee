@@ -1,30 +1,33 @@
-import { $ } from "zx"
+import { $ } from "dax-sh"
 import { Release, Dependencies, Git, Pkg, success, sleep } from "./helpers"
 
 # $.quiet = true
 
 export default ( Genie ) ->
 
+  # TODO we need the await keyword below because
+  # genie expects a promise, not a thenable, but dax-sh
+  # returns thenables
   Genie.define "release:version", ( version ) ->
     [ version, tag ] = version.split "-"
     switch version
       when "alpha", "beta"
-        success $"npm version prerelease --preid #{ version }"
+        await $"npm version prerelease --preid #{ version }"
       when "major", "minor", "patch"
         unless tag?
-          success $"npm version #{ version }"
+          await $"npm version #{ version }"
         else
-          success $"npm version pre#{ version } --preid #{ tag }"
+          await $"npm version pre#{ version } --preid #{ tag }"
       else
         throw new Error "genie-release: 
           unknown version type: #{ version }"
 
   Genie.define "release:publish", -> 
-    success $"npm publish --access public"
+    await $"npm publish --access public"
 
   Genie.define "release:push", ->
 
-    await success $"git push --follow-tags"
+    await $"git push --follow-tags"
 
     # confirm that NPM has the right version
 
@@ -49,7 +52,6 @@ export default ( Genie ) ->
     await sleep pause
     loop
       remote = await Pkg.specifier "."
-      console.log { remote, local }
       break if (( local == remote ) || ( count++ > retries ))
       await sleep interval
     if count > retries

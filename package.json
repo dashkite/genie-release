@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@dashkite/zephyr": "^0.12.1",
-    "zx": "^8.6.1"
+    "bun": "^1.2.19",
+    "dax-sh": "^0.43.2"
   }
 }
