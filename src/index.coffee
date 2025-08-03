@@ -46,6 +46,7 @@ export default ( Genie ) ->
     interval = ( 5 * 60 * 1000 ) + pause
     # 3 retries = 15 min
     retries = 3
+    console.error "genie-release: verifying publish..."
     # we must appease the angry NPM god: initially give it
     # some time (10 seconds) to (hopefully) avoid caching a
     # 404, because it caches it for 5 min :o
