@@ -87,7 +87,7 @@ export default ( Genie ) ->
 
         version ?= await Release.getType()
 
-        Genie.run [
+        await Genie.run [
           "release:update-dependencies"
           "release:version:#{version}"
           "release:publish"
