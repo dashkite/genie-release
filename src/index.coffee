@@ -84,12 +84,13 @@ export default ( Genie ) ->
 
     if await Git.isClean()
 
+      await Genie.run "release:update-dependencies"
+
       if await Pkg.hasChanges()
 
         version ?= await Release.getType()
 
         await Genie.run [
-          "release:update-dependencies"
           "release:version:#{version}"
           "release:publish"
           "release:push"
