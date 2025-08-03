@@ -3,7 +3,7 @@ import {test, success} from "@dashkite/amen"
 import print from "@dashkite/amen-console"
 
 import { $ } from "dax-sh"
-import { Git, Pkg } from "../src/helpers"
+import { Git, Pkg, Release } from "../src/helpers"
 
 
 do ->
@@ -42,11 +42,28 @@ do ->
 
     test "package helpers", [
       
-      test "get specifier (version)", ->
-        assert /\d$/.test await Pkg.specifier "dax-sh"
+      test "get version", ->
+        assert /\d$/.test await Pkg.version "dax-sh"
 
       test "get last-modified", ->
         assert /Z$/.test await Pkg.modified "dax-sh"
+
+    ]
+
+    test "release file", [
+
+      test "get specifier", ->
+        { type } = await Release.getSpecifier "foo"
+        assert.equal type, "exact"
+        { type } = await Release.getSpecifier "bar"
+        assert.equal type, "range"
+
+      test "get release type", ->
+        type = await Release.getType()
+        assert.equal type, "patch"
+
+      test "get stable flag", ->
+        assert !Release.stable()
 
     ]
 

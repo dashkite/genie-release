@@ -1,3 +1,4 @@
+import { $ } from "dax-sh"
 import { metaclass } from "@dashkite/joy/metaclass"
 import { Git } from "./git"
 import { Pkg } from "./package"
@@ -20,14 +21,20 @@ class Dependency
   path: -> if @isLocal then @specifier[5..]
 
   canUpdate: ->
-    if @isLocal() && ( await @getPublishedSpecifier())?
+    if @isLocal() && ( await @isPublished())
       if ( lastPublished = await Pkg.modified @key )?
         lastCommit = await Git.getLastCommit @path()
         lastCommit <= lastPublished
       else false
     else false
 
-  getPublishedSpecifier: -> Pkg.specifier @key
+  update: ->
+    specifier = await Pkg.specifier @
+    $"pnpm add #{ @key }@#{ specifier }"
+
+  isPublished: -> ( await @getPublishedVersion())?
+
+  getPublishedVersion: -> Pkg.version @key
 
 export { Dependency }
 

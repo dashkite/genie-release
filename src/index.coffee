@@ -51,15 +51,19 @@ export default ( Genie ) ->
     # 404, because it caches it for 5 min :o
     await sleep pause
     loop
-      remote = await Pkg.specifier "."
+      remote = await Pkg.version "."
       break if (( local == remote ) || ( count++ > retries ))
       await sleep interval
     if count > retries
       throw new Error "genie-release:
         unable to confirm NPM publish was successful" 
     
+  Genie.define "release:update-published-dependencies", ->
+    Dependencies.updatePublished()
+
   Genie.define "release:update-local-dependencies", ->
-    Dependencies.updateLocalDependencies()
+    Dependencies.updateLocal()
+
 
   # TODO add dependency on test task
   #      in theory, genie supports optional tasks
@@ -70,6 +74,11 @@ export default ( Genie ) ->
   # TODO add check to make sure the files property of the package.json
   #      file is populated. other integrity checks?
 
+  Genie.define "release:update-dependencies", [
+    "release:update-published-dependencies"
+    "release:update-local-dependencies"
+  ]
+
   Genie.define "release", ( version ) ->
 
     if await Git.isClean()
@@ -79,11 +88,19 @@ export default ( Genie ) ->
         version ?= await Release.getType()
 
         Genie.run [
-          "release:update-local-dependencies"
+          "release:update-dependencies"
           "release:version:#{version}"
           "release:publish"
           "release:push"
         ]
+
+        if Release.stable()
+          # set to something unlikely to collide with 
+          # existing shell conventions so that Tempo
+          # can possibly make use of this later
+          process.exitCode = 255
+          throw new Error "genie-release:
+            package unstable: new version published"
 
     else
 

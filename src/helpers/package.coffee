@@ -6,13 +6,15 @@ Pkg =
 
   install: -> $"pnpm i"
 
+  update: -> $"pnpm up"
+
   localVersion: ->
     # make sure we don't get a cached version, please
     Zephyr.invalidate "package.json"
     pkg = await Zephyr.read "package.json"
     pkg.version
 
-  specifier: ( key ) ->
+  version: ( key ) ->
     try
       await $"pnpm view #{ key } version"
         .quiet()
@@ -20,12 +22,20 @@ Pkg =
     catch
       undefined
   
+  specifier: ( dependency ) ->
+    { type } = await Release.getSpecifier dependency.key
+    version = await dependency.getPublishedVersion()
+    switch type
+      when "range"
+        "^#{ version }"
+      else version
+
   modified: ( key ) ->
     try
-      specifier = await Pkg.specifier key
+      version = await Pkg.version key
       timestamps = await $"pnpm view #{ key } time --json"
         .json()
-      timestamps[ specifier ]
+      timestamps[ version ]
     catch
       ( new Date 0 ).toISOString()
 

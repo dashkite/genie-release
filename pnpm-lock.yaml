@@ -16,8 +16,8 @@ importers:
         version: 0.43.2
     devDependencies:
       '@dashkite/amen':
-        specifier: ^0.8.0
-        version: 0.8.0
+        specifier: ^0.9.2
+        version: 0.9.2
       '@dashkite/amen-console':
         specifier: ^0.7.0
         version: 0.7.0
@@ -583,8 +583,8 @@ packages:
   '@dashkite/amen-console@0.7.0':
     resolution: {integrity: sha512-FGPZlU+VEHTyzQWdi4vHm5oqgYsPn5mtmqohECrLDVF/Rxrudw5lehOagYSMIDhQfUQ94euDh1y6JUmHTmwU6w==}
 
-  '@dashkite/amen@0.8.0':
-    resolution: {integrity: sha512-yuvUlWdl/URmxenQQTSL4L9qIM8ZJGATXyjbFPwiXdT8ZwWqEi6utV6ScvXEI87Oyh1t2aKEOMvEkeUfwXTf2A==}
+  '@dashkite/amen@0.9.2':
+    resolution: {integrity: sha512-OHif89glJ+WfWwZrLYYPAVIp0rGChNdRzFxYYCSvNzeHzW3Sv1InjR7lMFTh3lUtuLvm7OeE2vibS/xjxkox4w==}
 
   '@dashkite/assert@0.6.0':
     resolution: {integrity: sha512-G3qDhlMlDCJZts/yVjBmrVe0/Ox45TnRTMtfw3HT7VdFRzEz+1nVJJa8uchPtPTBfCCaXfgjPXcoccUFiap45A==}
@@ -2167,7 +2167,7 @@ snapshots:
 
   '@dashkite/amen-console@0.7.0': {}
 
-  '@dashkite/amen@0.8.0': {}
+  '@dashkite/amen@0.9.2': {}
 
   '@dashkite/assert@0.6.0':
     dependencies:
