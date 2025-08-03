@@ -5,7 +5,10 @@ import { Git } from "./git"
 
 Dependencies =
 
-  updatePublished: -> Pkg.update()
+  updatePublished: -> 
+    await Pkg.update()
+    if !( await Git.isClean())
+      Git.commit "updated published dependencies"
 
   updateLocal: ->
 
