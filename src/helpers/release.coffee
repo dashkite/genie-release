@@ -23,4 +23,9 @@ Release =
       release.specifiers[ key ] ? Specifier.default
     else Specifier.default
 
+  force: ->
+    switch process.env.force?.toLowerCase()
+      when "yes", "true" then true
+      else false
+
 export { Release }

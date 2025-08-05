@@ -1,5 +1,6 @@
 import { $ } from "dax-sh"
-import { Release, Dependencies, Git, Pkg, success, sleep } from "./helpers"
+import { Release, Dependencies, 
+  Git, Pkg, success, sleep } from "./helpers"
 
 # $.quiet = true
 
@@ -86,7 +87,7 @@ export default ( Genie ) ->
 
       await Genie.run "release:update-dependencies"
 
-      if await Pkg.hasChanges()
+      if Release.force() || ( await Pkg.hasChanges())
 
         version ?= await Release.getType()
 
