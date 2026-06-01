@@ -91,11 +91,16 @@ export default ( Genie ) ->
 
         version ?= await Release.getType()
 
-        await Genie.run [
-          "release:version:#{version}"
-          "release:publish"
-          "release:push"
-        ]
+        await Genie.run "release:version:#{version}"
+        try
+          await Genie.run "release:publish"
+        catch error
+          try
+            current = await Pkg.localVersion()
+            await $"git reset --hard HEAD~1".quiet()
+            await $"git tag -d v#{current}".quiet()
+          throw error
+        await Genie.run "release:push"
 
         if Release.stable()
           # set to something unlikely to collide with 
