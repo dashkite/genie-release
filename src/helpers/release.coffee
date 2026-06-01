@@ -20,7 +20,7 @@ Release =
 
   getSpecifier: ( key ) ->
     if ( release = await Zephyr.read "release.yaml" )?
-      release.specifiers[ key ] ? Specifier.default
+      release.specifiers?[ key ] ? Specifier.default
     else Specifier.default
 
   force: ->
